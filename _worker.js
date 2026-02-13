@@ -41,6 +41,18 @@ export default {
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
 				const url = new URL(request.url);
 				switch (url.pathname) {
+					case `/api/health`: {
+						return new Response(JSON.stringify({
+							ok: true,
+							message: 'EDtunnel worker is running',
+							timestamp: new Date().toISOString(),
+						}), {
+							status: 200,
+							headers: {
+								"Content-Type": "application/json;charset=utf-8",
+							},
+						});
+					}
 					case `/cf`: {
 						return new Response(JSON.stringify(request.cf, null, 4), {
 							status: 200,
